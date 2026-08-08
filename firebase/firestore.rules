@@ -57,16 +57,20 @@ service cloud.firestore {
     }
 
     // notes/{noteId}
-    // Each user can only read/write their own notes.
+    // Users can only read and write their own notes.
     match /notes/{noteId} {
-      allow read:   if isAuthenticated() && isOwner(resource.data.uid);
-      allow create: if isAuthenticated() && isOwner(request.resource.data.uid);
-      allow update: if isAuthenticated() && isOwner(resource.data.uid)
-                    && request.resource.data.uid == resource.data.uid;
-      allow delete: if false;  // soft-delete only — set deletedAt instead
-    }
+      allow read: if isAuthenticated() && isOwner(resource.data.uid) && notDeleted();
 
-    // Add new collection rules above this comment using the /firebase-collection skill.
+      allow create: if isAuthenticated() && isOwner(request.resource.data.uid)
+        && request.resource.data.keys().hasAll(['uid', 'title', 'body', 'createdAt', 'updatedAt', '_schemaVersion'])
+        && request.resource.data.keys().hasOnly(['uid', 'title', 'body', 'createdAt', 'updatedAt', '_schemaVersion']);
+
+      allow update: if isAuthenticated() && isOwner(resource.data.uid)
+        && request.resource.data.uid == resource.data.uid  // uid is immutable
+        && request.resource.data.keys().hasOnly(['uid', 'title', 'body', 'createdAt', 'updatedAt', 'deletedAt', '_schemaVersion']);
+
+      allow delete: if false; // soft-delete only — set deletedAt instead
+    }
 
     // ── Default deny ───────────────────────────────────────────────────────
     match /{document=**} {

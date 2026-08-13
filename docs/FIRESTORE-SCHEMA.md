@@ -45,5 +45,25 @@ This enables **lazy migration** — when a document is read, check `_schemaVersi
 **Deletion:** Hard-delete is disabled in security rules. Use `deletedAt` field for soft-delete.
 
 ---
+---
+
+## `teamMembers` collection
+
+**Path:** `/teamMembers/{memberId}`
+**Access:** Read-only for any authenticated user; no client write path — managed out-of-band via `frontend/scripts/seed-team.mjs` using the Admin SDK, which bypasses security rules
+
+| Field | Type | Required | Description |
+|-------|------|----------|--------------|
+| `name` | `string` | Yes | Team member's display name |
+| `role` | `string` | Yes | Job title / role on the team |
+| `description` | `string` | Yes | Short blurb about the member |
+| `photoURL` | `string \| null` | Yes | Profile photo URL, or `null` to show the default placeholder avatar |
+| `order` | `number` | Yes | Display order on the Team Page |
+| `createdAt` | `Timestamp` | Yes | When the document was created |
+| `updatedAt` | `Timestamp` | Yes | When the document was last updated |
+| `_schemaVersion` | `1` | Yes | Schema version for lazy migration |
+
+**Creation:** Seeded manually via `node --env-file=../.env scripts/seed-team.mjs` from the `frontend/` directory.
+**Deletion:** Not supported through the app; edit or delete documents directly via the Firebase console if needed.
 
 <!-- Add new collection schemas below using the /firebase-collection skill -->

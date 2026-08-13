@@ -56,6 +56,15 @@ service cloud.firestore {
       allow delete: if false; // soft-delete only — set deletedAt field instead
     }
 
+    // teamMembers/{memberId}
+    // Static team roster. Read-only for any signed-in user; writes are done
+    // out-of-band via scripts/seed-team.js using the Admin SDK, which bypasses
+    // these rules entirely — so no client write path is needed or allowed.
+    match /teamMembers/{memberId} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+
     // Add new collection rules above this comment using the /firebase-collection skill.
 
     // ── Default deny ───────────────────────────────────────────────────────

@@ -23,3 +23,18 @@ export interface UserProfile {
 }
 
 export type CreateUserProfileInput = Omit<UserProfile, 'createdAt' | 'updatedAt'>
+/**
+ * Static team roster entry. Read-only from the client — managed via the
+ * scripts/seed-team.js Admin SDK script, not through the app UI.
+ */
+export interface TeamMember {
+  id: string
+  name: string
+  role: string
+  description: string
+  photoURL: string | null
+  order: number
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  _schemaVersion: 1
+}

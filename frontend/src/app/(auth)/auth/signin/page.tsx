@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -9,6 +10,7 @@ import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
 import { loginSchema, type LoginInput } from '@/lib/validations/auth'
 import { FullPageSpinner } from '@/components/shared/LoadingSpinner'
+import { PasswordInput } from '@/components/shared/PasswordInput'
 
 export default function SignInPage() {
   const router = useRouter()
@@ -62,10 +64,17 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-1 text-center">
-        <h1 className="text-2xl font-bold tracking-tight">Sign in</h1>
-        <p className="text-sm text-zinc-500">Enter your credentials to continue</p>
+    <div className="w-full max-w-sm space-y-6 rounded-2xl border border-zinc-200 bg-white p-8 shadow-lg dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="space-y-2 text-center">
+        <Image
+          src="/team66-logo.png"
+          alt="Team 66"
+          width={72}
+          height={72}
+          className="mx-auto rounded-full"
+        />
+        <h1 className="text-2xl font-extrabold tracking-tight">Team 66</h1>
+        <p className="text-base font-semibold text-zinc-500">Login</p>
       </div>
 
       <button
@@ -99,14 +108,14 @@ export default function SignInPage() {
           <span className="w-full border-t border-zinc-200 dark:border-zinc-700" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-zinc-50 px-2 text-zinc-400 dark:bg-zinc-950">or</span>
+          <span className="bg-white px-2 text-zinc-400 dark:bg-zinc-900">or</span>
         </div>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-1.5">
-          <label htmlFor="email" className="text-sm font-medium">
-            Email
+          <label htmlFor="email" className="text-sm font-bold">
+            Email:
           </label>
           <input
             id="email"
@@ -114,8 +123,8 @@ export default function SignInPage() {
             autoComplete="email"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? 'email-error' : undefined}
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
-            placeholder="you@example.com"
+            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-red-400 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
+            placeholder="Example@email.com"
             {...register('email')}
           />
           {errors.email && (
@@ -126,19 +135,16 @@ export default function SignInPage() {
         </div>
 
         <div className="space-y-1.5">
-          <div className="flex items-center justify-between">
-            <label htmlFor="password" className="text-sm font-medium">
-              Password
-            </label>
-          </div>
-          <input
+          <label htmlFor="password" className="text-sm font-bold">
+            Password:
+          </label>
+          <PasswordInput
             id="password"
-            type="password"
             autoComplete="current-password"
             aria-invalid={!!errors.password}
             aria-describedby={errors.password ? 'password-error' : undefined}
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
-            placeholder="••••••••"
+            className="rounded-md border border-zinc-300 bg-white py-2 pl-3 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-red-400 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
+            placeholder="Password..."
             {...register('password')}
           />
           {errors.password && (
@@ -151,19 +157,16 @@ export default function SignInPage() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-md bg-black px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+          className="w-full rounded-full bg-red-400 px-4 py-2.5 text-sm font-bold text-white shadow transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {isSubmitting ? 'Signing in…' : 'Sign in'}
+          {isSubmitting ? 'Signing in…' : 'Sign In'}
         </button>
       </form>
 
       <p className="text-center text-sm text-zinc-500">
-        Don&apos;t have an account?{' '}
-        <Link
-          href="/auth/signup"
-          className="font-medium text-zinc-900 hover:underline dark:text-white"
-        >
-          Create one
+        Create An Account?{' '}
+        <Link href="/auth/signup" className="font-medium text-blue-600 hover:underline">
+          Click Me
         </Link>
       </p>
     </div>

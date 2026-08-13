@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
 import { signupSchema, type SignupInput } from '@/lib/validations/auth'
 import { FullPageSpinner } from '@/components/shared/LoadingSpinner'
+import { PasswordInput } from '@/components/shared/PasswordInput'
 
 export default function SignUpPage() {
   const router = useRouter()
@@ -141,16 +142,15 @@ export default function SignUpPage() {
           <label htmlFor="password" className="text-sm font-medium">
             Password
           </label>
-          <input
-            id="password"
-            type="password"
-            autoComplete="new-password"
-            aria-invalid={!!errors.password}
-            aria-describedby={errors.password ? 'password-error' : undefined}
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
-            placeholder="Min. 8 characters, 1 uppercase, 1 number"
-            {...register('password')}
-          />
+          <PasswordInput
+              id="password"
+              autoComplete="new-password"
+              aria-invalid={!!errors.password}
+              aria-describedby={errors.password ? 'password-error' : undefined}
+              className="rounded-md border border-zinc-300 bg-white py-2 pl-3 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
+              placeholder="Min. 8 characters, 1 uppercase, 1 number"
+              {...register('password')}
+            />
           {errors.password && (
             <p id="password-error" className="text-xs text-red-500" role="alert">
               {errors.password.message}
@@ -162,13 +162,12 @@ export default function SignUpPage() {
           <label htmlFor="confirmPassword" className="text-sm font-medium">
             Confirm password
           </label>
-          <input
+          <PasswordInput
             id="confirmPassword"
-            type="password"
             autoComplete="new-password"
             aria-invalid={!!errors.confirmPassword}
             aria-describedby={errors.confirmPassword ? 'confirm-password-error' : undefined}
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
+            className="rounded-md border border-zinc-300 bg-white py-2 pl-3 text-sm shadow-sm placeholder:text-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:outline-none aria-invalid:border-red-500 dark:border-zinc-700 dark:bg-zinc-900"
             placeholder="••••••••"
             {...register('confirmPassword')}
           />

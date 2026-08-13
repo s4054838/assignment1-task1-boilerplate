@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "REPLACE_WITH_FIREBASE_PROJECT_ID"
+    "default": "assignment1-task1-boilerplate"
   },
   "targets": {},
   "etags": {}

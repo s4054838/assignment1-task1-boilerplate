@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type TeamMemberCardProps = {
   member: {
@@ -16,6 +16,31 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
   // Tracks both "no photoURL set" and "photoURL set but failed to load" —
   // both cases fall back to the same placeholder per the requirements doc.
   const [imageFailed, setImageFailed] = useState(false)
+
+  useEffect(() => {
+    setImageFailed(false)
+    if (!member.photoURL) return
+
+    let cancelled = false
+
+    fetch(member.photoURL, { method: 'GET' })
+      .then((res) => {
+        if (cancelled) return
+        const contentType = res.headers.get('content-type') || ''
+        // Only treat it as a real photo if the response succeeded AND is actually an image
+        if (!res.ok || !contentType.startsWith('image/')) {
+          setImageFailed(true)
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setImageFailed(true)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [member.photoURL])
+
   const showPlaceholder = !member.photoURL || imageFailed
 
   return (

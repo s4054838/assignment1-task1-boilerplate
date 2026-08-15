@@ -71,7 +71,8 @@ export default function SignInPage() {
           alt="Team 66"
           width={72}
           height={72}
-          className="mx-auto rounded-full"
+          priority
+          className="mx-auto h-[72px] w-[72px] rounded-full"
         />
         <h1 className="text-2xl font-extrabold tracking-tight">Team 66</h1>
         <p className="text-base font-semibold text-zinc-500">Login</p>

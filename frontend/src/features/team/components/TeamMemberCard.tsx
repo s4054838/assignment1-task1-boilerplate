@@ -18,7 +18,6 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
   const [imageFailed, setImageFailed] = useState(false)
 
   useEffect(() => {
-    setImageFailed(false)
     if (!member.photoURL) return
 
     let cancelled = false

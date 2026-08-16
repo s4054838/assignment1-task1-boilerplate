@@ -80,6 +80,8 @@ for (const [key, value] of Object.entries(env)) {
   if (key.startsWith('NEXT_PUBLIC_')) frontendLines.push(`${key}=${value}`)
 }
 frontendLines.push(`FIREBASE_SERVICE_ACCOUNT_KEY_BASE64=${get('FIREBASE_SERVICE_ACCOUNT_KEY_BASE64')}`)
+frontendLines.push(`TEST_USER_EMAIL=${get('TEST_USER_EMAIL')}`)
+frontendLines.push(`TEST_USER_PASSWORD=${get('TEST_USER_PASSWORD')}`)
 
 // ── backend/.env ─────────────────────────────────────────────────────
 const backendLines = [
